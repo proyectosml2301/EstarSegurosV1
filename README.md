@@ -1,19 +1,16 @@
-# Seguros Venezuela · Tablero de Asistencia Vial
+# Estar Seguros · Tablero de Asistencia Vial
 
-Tablero de resultados técnicos del cierre de **agosto 2026** para la cartera de Asistencia
-Vial de Seguros Venezuela.
+Tablero de gestión de Asistencia Vial con el cierre de **agosto 2026**, por dimensiones
+(plaza, sucursal, productor y estatus de verificación). Cifras en USD.
 
 ## Contenido
 
 | Ruta | Descripción |
 | --- | --- |
-| `index.html` | Tablero de resultados técnicos · Seguros Venezuela |
+| `index.html` | Tablero de gestión · Estar Seguros · Asistencia Vial |
 
-Cuota devengada pro-rata temporis, expuestos a riesgo como unidad de exposición y vehículos
-activos por plaza. Bordereaux de cuotas cobradas y reclamaciones hasta agosto 2026, en USD.
-
-`index.html` es un archivo autocontenido: los datos y el estilo van embebidos y la única
-dependencia externa es Chart.js por CDN. No requiere build ni servidor.
+`index.html` es un archivo autocontenido: los datos y el estilo van embebidos y las únicas
+dependencias externas son Chart.js y Google Fonts por CDN. No requiere build ni servidor.
 
 ## Uso local
 
