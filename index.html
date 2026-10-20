@@ -1,176 +1,253 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tableros de gestión · Asistencia Vial · Agosto 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Public+Sans:wght@400;500;600&display=swap">
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seguros Venezuela - Asistencia Vial - Agosto 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root{
-  --bg:#F3F7F6; --surface:#FFFFFF; --surface-2:#EBF3F2;
-  --ink:#1D312E; --ink-2:#3A4F4B; --muted:#5A7470; --line:#D6E3E1;
-  --accent:#1E9C9C; --accent-2:#7DB31A; --accent-soft:#DDF2F1; --accent-ink:#127272;
-  --f-display:'Archivo','Helvetica Neue',Arial,sans-serif;
-  --f-body:'Public Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --r:10px;
-  --shadow:0 1px 2px rgba(29,49,46,.06), 0 8px 24px rgba(29,49,46,.05);
-}
-@media (prefers-color-scheme: dark){
-  :root{
-    --bg:#0B1615; --surface:#11211F; --surface-2:#172B29;
-    --ink:#E2EFEC; --ink-2:#C0D2CE; --muted:#8CA6A1; --line:#22383A;
-    --accent:#3CBABA; --accent-2:#9ED13A; --accent-soft:#123A3A; --accent-ink:#7FDCDC;
-    --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 28px rgba(0,0,0,.28);
+--ink:#E8EAED;--ink-soft:#C8CBD0;--ink-mute:#9AA0A6;--ink-faint:#80868B;
+--paper:#121316;--paper-card:#1C1E22;--paper-soft:#26282E;
+--rule:#3A3D43;--rule-soft:#2C2F35;
+--accent:#8AB4F8;--accent-soft:#8AB4F8;--positive:#81C995;--alert:#F28B82;
+--table-head:#23395B;--table-stripe:#202830;
+--sg-bg:rgba(129,201,149,.16);--sg-fg:#81C995;--sb-bg:rgba(242,139,130,.16);--sb-fg:#F28B82;
+--shadow:0 1px 3px rgba(0,0,0,.45)}
+:root.light{
+--ink:#202124;--ink-soft:#3C4043;--ink-mute:#5F6368;--ink-faint:#80868B;
+--paper:#FFF;--paper-card:#FFF;--paper-soft:#F8F9FA;
+--rule:#DADCE0;--rule-soft:#E8EAED;
+--accent:#1A73E8;--accent-soft:#4285F4;--positive:#137333;--alert:#C5221F;
+--table-head:#1F3864;--table-stripe:#F2F7FB;
+--sg-bg:#E6F4EA;--sg-fg:#137333;--sb-bg:#FCE8E6;--sb-fg:#C5221F;--shadow:none}
+*{box-sizing:border-box;margin:0;padding:0}html,body{background:var(--paper);color:var(--ink);font-family:'Google Sans','Roboto',-apple-system,sans-serif;font-size:14px;line-height:1.6;font-variant-numeric:tabular-nums;transition:background .25s,color .25s}
+.page{max-width:1440px;margin:0 auto;padding:40px 56px 80px;position:relative}.page::before{content:'';display:block;position:absolute;top:0;left:56px;right:56px;height:3px;background:var(--accent)}
+.theme-toggle{position:fixed;top:16px;right:18px;z-index:50;background:var(--paper-card);color:var(--ink-soft);border:1px solid var(--rule);border-radius:20px;padding:7px 15px;font:500 12px/1 'Google Sans','Roboto',sans-serif;cursor:pointer;box-shadow:0 1px 5px rgba(0,0,0,.3)}.theme-toggle:hover{border-color:var(--accent);color:var(--ink)}
+.masthead{display:grid;grid-template-columns:1fr auto;align-items:end;padding:28px 0 20px;border-bottom:2px solid var(--ink);margin-bottom:32px}.masthead .eyebrow{font-weight:600;font-size:12px;color:var(--accent);letter-spacing:.25em;text-transform:uppercase;margin-bottom:4px}.masthead h1{font-weight:600;font-size:32px}.masthead .tagline{font-size:14px;color:var(--ink-mute);margin-top:4px}.masthead .meta{text-align:right;font-size:13px;color:var(--ink-mute);line-height:1.8}.masthead .key{font-weight:500;color:var(--ink-faint);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+section{margin-bottom:40px}.section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--rule)}.section-head .num{font-size:28px;font-weight:300;color:var(--accent)}.section-head h2{font-size:20px;font-weight:600}.sub-head{font-size:16px;font-weight:600;color:var(--accent-soft);margin:20px 0 8px}
+.narrative{color:var(--ink-soft);line-height:1.7;margin-bottom:16px;text-align:justify}.narrative strong{color:var(--ink)}
+.note{background:var(--paper-soft);border-left:3px solid var(--accent-soft);border-radius:0 6px 6px 0;padding:12px 16px;font-size:12.5px;color:var(--ink-mute);margin:8px 0 16px;line-height:1.65}.note strong{color:var(--ink-soft)}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:16px}.kpi-card{background:var(--paper-card);border:1px solid var(--rule-soft);border-radius:8px;padding:18px;box-shadow:var(--shadow)}.kpi-card .label{font-size:11px;font-weight:500;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}.kpi-card .value{font-size:26px;font-weight:600;letter-spacing:-.02em}.kpi-card .sub{font-size:12px;color:var(--ink-mute);margin-top:3px}.kpi-card.positive .value{color:var(--positive)}.kpi-card.accent .value{color:var(--accent)}.kpi-card.alert .value{color:var(--alert)}
+.tab-bar{display:flex;gap:0;margin-bottom:16px;border-bottom:2px solid var(--rule-soft)}.tab-btn{padding:10px 24px;border:none;background:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:500;color:var(--ink-mute);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s}.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}.tab-content{display:none}.tab-content.active{display:block}
+.charts-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:12px}.chart-card{background:var(--paper-card);border:1px solid var(--rule-soft);border-radius:8px;padding:18px;box-shadow:var(--shadow)}.chart-card h3{font-size:14px;font-weight:600;margin-bottom:3px}.chart-card .sub{font-size:12px;color:var(--ink-mute);margin-bottom:10px}.chart-card.full{grid-column:1/-1}.chart-host{position:relative;height:280px}
+.tbl-scroll{overflow-x:auto;max-width:100%;margin:12px 0}.tbl-scroll .suf-table{margin:0}
+/* Tramo intermedio del semáforo, los siniestros se cubren pero la operación no. */
+.sw{color:#F9AB00;font-weight:600}
+.suf-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}.suf-table th{background:var(--table-head);color:#fff;font-weight:600;text-align:center;padding:10px 12px}.suf-table th:first-child{text-align:left}.suf-table td{padding:9px 12px;border-bottom:1px solid var(--rule-soft);text-align:center}.suf-table td:first-child{text-align:left;font-weight:500}.suf-table tr:nth-child(even){background:var(--table-stripe)}.sg{background:var(--sg-bg)!important;color:var(--sg-fg);font-weight:600}.sb{background:var(--sb-bg)!important;color:var(--sb-fg);font-weight:600}
+.colophon{margin-top:48px;padding-top:24px;border-top:1px solid var(--rule);display:grid;grid-template-columns:1fr 1fr;gap:32px;font-size:12px;color:var(--ink-faint)}.colophon h5{font-size:11px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.suf-control{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--paper-soft);border:1px solid var(--rule-soft);border-radius:8px;padding:12px 16px;margin:8px 0 6px}
+.suf-control label{font-size:12px;font-weight:600;color:var(--ink-soft)}
+.suf-control input[type=range]{flex:1;min-width:170px;max-width:300px;accent-color:var(--accent);cursor:pointer}
+.suf-fval{font-size:18px;font-weight:600;color:var(--accent)}.suf-fsub{font-size:12px;color:var(--ink-mute)}
+.suf-reset{margin-left:auto;background:none;border:1px solid var(--rule);color:var(--ink-mute);border-radius:14px;padding:5px 12px;font:500 11px/1 'Google Sans','Roboto',sans-serif;cursor:pointer}.suf-reset:hover{border-color:var(--accent);color:var(--accent)}
+.alert-band{margin:4px 0 20px;border:1px solid var(--rule-soft);border-radius:10px;overflow:hidden;background:var(--paper-card);box-shadow:var(--shadow)}
+.alert-band .ab-head{padding:9px 16px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);border-bottom:1px solid var(--rule-soft);background:var(--paper-soft)}
+.alert-item{display:flex;align-items:flex-start;gap:10px;padding:9px 16px;font-size:13px;color:var(--ink-soft);border-bottom:1px solid var(--rule-soft)}.alert-item:last-child{border-bottom:none}
+.alert-item .dot{flex:0 0 auto;width:8px;height:8px;border-radius:50%;margin-top:5px}
+.alert-item.high .dot{background:var(--alert)}.alert-item.med .dot{background:#F9AB00}.alert-item.ok .dot{background:var(--positive)}.alert-item strong{color:var(--ink)}
+.chip{display:inline-block;margin-top:5px;font-size:11px;font-weight:600;padding:1px 8px;border-radius:10px;white-space:nowrap}
+.chip-up{color:var(--positive);background:rgba(129,201,149,.15)}.chip-down{color:var(--alert);background:rgba(242,139,130,.15)}.chip-flat{color:var(--ink-mute);background:rgba(154,160,166,.15)}
+.spark{margin-top:8px;height:34px;position:relative}
+.actions{counter-reset:ac;margin:8px 0 16px;padding:0;list-style:none}
+.actions li{position:relative;padding:11px 14px 11px 44px;border:1px solid var(--rule-soft);border-radius:8px;margin-bottom:8px;background:var(--paper-card);font-size:13.5px;color:var(--ink-soft);box-shadow:var(--shadow)}
+.actions li::before{counter-increment:ac;content:counter(ac);position:absolute;left:12px;top:11px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.actions li.med{border-left:3px solid #F9AB00}.actions li.ok{border-left:3px solid var(--positive)}
+.actions li strong{color:var(--ink)}.actions li .tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:1px 7px;border-radius:8px;margin-left:6px}
+.actions li.med .tag{color:#B06000;background:rgba(249,171,0,.15)}.actions li.ok .tag{color:var(--positive);background:rgba(129,201,149,.15)}
+.tip{position:relative;display:inline-flex;align-items:center}.tip .ic{display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-left:5px;border-radius:50%;border:1px solid var(--ink-faint);color:var(--ink-faint);font:700 9px/1 'Times New Roman',serif;font-style:italic;cursor:help;flex:0 0 auto}
+.tip:hover .ic,.tip:focus-within .ic{border-color:var(--accent);color:var(--accent)}
+.tip .box{position:absolute;bottom:calc(100% + 9px);left:0;z-index:90;width:262px;background:var(--paper-card);color:var(--ink-soft);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;font-weight:400;font-size:11.5px;line-height:1.5;text-align:left;text-transform:none;letter-spacing:normal;box-shadow:0 6px 22px rgba(0,0,0,.5);opacity:0;visibility:hidden;transform:translateY(4px);transition:opacity .15s,transform .15s;pointer-events:none}
+.tip:hover .box,.tip:focus-within .box{opacity:1;visibility:visible;transform:translateY(0)}
+.tip .box::after{content:'';position:absolute;top:100%;left:14px;border:6px solid transparent;border-top-color:var(--paper-card)}
+.tip.tr .box{left:auto;right:0}.tip.tr .box::after{left:auto;right:14px}
+.tip .box b{display:block;margin-bottom:3px;font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint)}
+.tip .box .d{color:var(--ink)}
+.tip .box .f{display:block;margin-top:7px;padding-top:6px;border-top:1px solid var(--rule-soft);font-family:'Roboto Mono',ui-monospace,'Courier New',monospace;font-size:11px;color:var(--accent-soft)}
+.tip .box .f::before{content:'ƒ  ';opacity:.6}
+@media print{body{background:white}.page{padding:20px;max-width:none}.chart-card,section{page-break-inside:avoid}.tab-bar{display:none}.tab-content{display:block!important;margin-bottom:20px}.theme-toggle,.suf-control input,.suf-reset{display:none}.tip .ic{display:none}}
+@media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.charts-grid{grid-template-columns:1fr}.page{padding:24px}}
+</style></head><body>
+<button id="theme-toggle" class="theme-toggle" type="button">Modo claro</button>
+<div class="page">
+<header class="masthead"><div class="brand"><p class="eyebrow">Asistencia Vial</p><h1>Seguros Venezuela</h1><p class="tagline">Resultados Técnicos - Agosto 2026</p></div>
+<div class="meta"><div><span class="key">Cierre</span> &nbsp; <strong>31 de agosto de 2026</strong></div><div><span class="key">Operaciones</span> &nbsp; <strong>24 meses (desde septiembre 2024)</strong></div><div><span class="key">Moneda</span> &nbsp; <strong>USD</strong></div></div></header>
+
+<!-- I -->
+<section><div class="section-head"><span class="num">I</span><h2>Resumen Ejecutivo</h2></div>
+<div class="alert-band"><div class="ab-head">Focos del período</div><div class="alert-item high"><span class="dot"></span><span>La <strong>cartera cierra en 4.488 vehículos activos</strong>, 10,2% por debajo del corte de julio recalculado (4.996). Es la mayor baja mensual en unidades del ejercicio. Una parte se corregirá al madurar la data, así que conviene confirmarla en el cierre de septiembre antes de leerla como salida consumada.</span></div><div class="alert-item ok"><span class="dot"></span><span>La <strong>carga del mes se normalizó</strong>. El lote de agosto trae 681 recibos contra los 1.277 de julio, y la corrección de la serie baja a 4,3% desde el 15,7% del cierre pasado. El corte de julio pasa de 4.789 a 4.996 vehículos activos.</span></div><div class="alert-item med"><span class="dot"></span><span>La <strong>frecuencia de reclamos</strong> subió a <strong>24 casos</strong> desde 11, por debajo del máximo de 80 de mayo 2026. El archivo de julio quedó confirmado en 11 casos con la data de hoy, de modo que aquel mes bajo no era un archivo incompleto.</span></div><div class="alert-item med"><span class="dot"></span><span>La <strong>tasa de uso histórica</strong> se ubica en 17,96%. Seguir su evolución en los próximos cierres.</span></div><div class="alert-item med"><span class="dot"></span><span>La <strong>retención mensual</strong> de agosto (86,7%) cae frente al promedio histórico (92,6%). Parte es maduración de data, pólizas con renovación aún sin cargar. Confirmar en el cierre de septiembre.</span></div></div>
+<p class="narrative">El presente informe recoge los resultados técnicos del producto de Asistencia Vial de Seguros Venezuela al cierre de <strong>agosto 2026</strong>. Durante este mes se incorporaron <strong>681 nuevos recibos</strong> de cuotas cobradas por <strong>10.756,42 USD</strong> -58,4% por debajo de los 25.829,75 USD de julio- y se registraron <strong>24 reclamos</strong>, un repunte de 118,2% en la frecuencia mensual. Desde septiembre 2024 se han procesado <strong>16.185 recibos</strong> de cuotas cobradas por <strong>242.772,00 USD</strong> y <strong>583 reclamos</strong>.</p>
+<p class="narrative">La tasa de uso acumulada es de <strong>17,96%</strong>, es decir, reclamos por cada 100 vehículos expuestos. La cartera cerró con <strong>4.488 vehículos activos</strong>.</p>
+<div class="kpi-grid" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+<div class="kpi-card accent"><div class="label"><span class="tip">Cuota Cobrada<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Honorarios de proveedor efectivamente cobrados, acumulados en la ventana.</span><span class="f">Σ Honorarios de Proveedor Recibo</span></span></span></div><div class="value">242.772,00</div><div class="sub">681 recibos en agosto</div><span class="chip chip-up">▲ 4,6% vs julio</span><div class="spark"><canvas id="spark-cc"></canvas></div></div>
+<div class="kpi-card"><div class="label"><span class="tip">Cuota Devengada<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Porción de la cuota ya consumida por el tiempo de cobertura transcurrido (pro-rata temporis).</span><span class="f">Σ (días transcurridos ÷ días de vigencia) × cuota</span></span></span></div><div class="value">178.200,56</div><div class="sub">Prima ya ganada, 73,4% de la cuota cobrada</div><span class="chip chip-up">▲ 7,7% vs julio</span><div class="spark"><canvas id="spark-dev"></canvas></div></div>
+<div class="kpi-card"><div class="label"><span class="tip">Vehículos Activos<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Pólizas vigentes a la fecha de corte.</span><span class="f">pólizas con FD_min ≤ corte ≤ FH_max</span></span></span></div><div class="value">4.488</div><div class="sub">Al 31 de agosto de 2026</div><span class="chip chip-down">▼ 10,2% vs julio</span><div class="spark"><canvas id="spark-va"></canvas></div></div>
+</div></section>
+
+<!-- II -->
+<section><div class="section-head"><span class="num">II</span><h2>Resultados por Ventana Temporal</h2></div>
+<p class="note">Cada indicador trae su definición y su fórmula al pasar el cursor por la <strong>i</strong>, y su variación frente al mes anterior en el chip de color. Conviene leer esas variaciones con cautela, porque en ventanas cortas los indicadores por expuesto se mueven con pocos recibos. La ventana histórica es la más estable y la del ejercicio la más volátil.</p>
+<div class="tab-bar" data-tabgroup="vent"><button class="tab-btn active" data-tab="hist">Histórico</button><button class="tab-btn" data-tab="m12">Últimos 12 Meses</button><button class="tab-btn" data-tab="ej">Ejercicio 2026</button></div>
+<div class="tab-content active" id="tab-vent-hist"><p class="narrative">Acumulado desde septiembre 2024 hasta agosto 2026 (24 meses de operación).</p><div class="kpi-grid"><div class="kpi-card"><div class="label"><span class="tip">Cuota Cobrada<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Honorarios de proveedor efectivamente cobrados, acumulados en la ventana.</span><span class="f">Σ Honorarios de Proveedor Recibo</span></span></span></div><div class="value">242.772,00</div></div><div class="kpi-card"><div class="label"><span class="tip">Cuota Devengada<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Porción de la cuota ya consumida por el tiempo de cobertura transcurrido (pro-rata temporis).</span><span class="f">Σ (días transcurridos ÷ días de vigencia) × cuota</span></span></span></div><div class="value">178.200,56</div></div><div class="kpi-card"><div class="label"><span class="tip">N° de Recibos<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Cantidad de recibos emitidos en la ventana.</span><span class="f">conteo de recibos</span></span></span></div><div class="value">16.185</div></div><div class="kpi-card"><div class="label"><span class="tip">Expuestos<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Exposición media a riesgo en la ventana, en vehículos-equivalentes.</span><span class="f">Σ (días de cobertura en la ventana ÷ días de la ventana)</span></span></span></div><div class="value">3.245,37</div></div></div><div class="kpi-grid"><div class="kpi-card"><div class="label"><span class="tip">Prima Devengada por Expuesto<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Cuota devengada por vehículo expuesto en la ventana.</span><span class="f">Cuota Devengada ÷ Expuestos</span></span></span></div><div class="value">54,91</div></div><div class="kpi-card"><div class="label"><span class="tip">% Tasa de Uso<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Frecuencia de uso del servicio respecto a la exposición.</span><span class="f">N° Reclamos ÷ Expuestos</span></span></span></div><div class="value">17,96%</div></div><div class="kpi-card"><div class="label"><span class="tip">Prima Promedio por Recibo<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Cuota cobrada media por recibo.</span><span class="f">Cuota Cobrada ÷ N° Recibos</span></span></span></div><div class="value">15,00</div></div></div><div class="charts-grid"><div class="chart-card"><h3>Resultados</h3><div class="chart-host"><canvas id="chart-res-hist"></canvas></div></div><div class="chart-card"><h3>Indicadores</h3><div class="chart-host"><canvas id="chart-ind-hist"></canvas></div></div></div></div>
+<div class="tab-content" id="tab-vent-m12"><p class="narrative">Ventana móvil de 12 meses, de septiembre 2025 a agosto 2026.</p><div class="kpi-grid"><div class="kpi-card"><div class="label"><span class="tip">Cuota Cobrada<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Honorarios de proveedor efectivamente cobrados, acumulados en la ventana.</span><span class="f">Σ Honorarios de Proveedor Recibo</span></span></span></div><div class="value">165.080,83</div></div><div class="kpi-card"><div class="label"><span class="tip">Cuota Devengada<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Porción de la cuota ya consumida por el tiempo de cobertura transcurrido (pro-rata temporis).</span><span class="f">Σ (días transcurridos ÷ días de vigencia) × cuota</span></span></span></div><div class="value">141.506,04</div></div><div class="kpi-card"><div class="label"><span class="tip">N° de Recibos<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Cantidad de recibos emitidos en la ventana.</span><span class="f">conteo de recibos</span></span></span></div><div class="value">10.941</div></div><div class="kpi-card"><div class="label"><span class="tip">Expuestos<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Exposición media a riesgo en la ventana, en vehículos-equivalentes.</span><span class="f">Σ (días de cobertura en la ventana ÷ días de la ventana)</span></span></span></div><div class="value">5.201,82</div></div></div><div class="kpi-grid"><div class="kpi-card"><div class="label"><span class="tip">Prima Devengada por Expuesto<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Cuota devengada por vehículo expuesto en la ventana.</span><span class="f">Cuota Devengada ÷ Expuestos</span></span></span></div><div class="value">27,20</div></div><div class="kpi-card"><div class="label"><span class="tip">% Tasa de Uso<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Frecuencia de uso del servicio respecto a la exposición.</span><span class="f">N° Reclamos ÷ Expuestos</span></span></span></div><div class="value">6,77%</div></div><div class="kpi-card"><div class="label"><span class="tip">Prima Promedio por Recibo<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Cuota cobrada media por recibo.</span><span class="f">Cuota Cobrada ÷ N° Recibos</span></span></span></div><div class="value">15,09</div></div></div><div class="charts-grid"><div class="chart-card"><h3>Resultados</h3><div class="chart-host"><canvas id="chart-res-m12"></canvas></div></div><div class="chart-card"><h3>Indicadores</h3><div class="chart-host"><canvas id="chart-ind-m12"></canvas></div></div></div></div>
+<div class="tab-content" id="tab-vent-ej"><p class="narrative">Acumulado del ejercicio en curso, de enero a agosto 2026.</p><div class="kpi-grid"><div class="kpi-card"><div class="label"><span class="tip">Cuota Cobrada<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Honorarios de proveedor efectivamente cobrados, acumulados en la ventana.</span><span class="f">Σ Honorarios de Proveedor Recibo</span></span></span></div><div class="value">98.969,33</div></div><div class="kpi-card"><div class="label"><span class="tip">Cuota Devengada<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Porción de la cuota ya consumida por el tiempo de cobertura transcurrido (pro-rata temporis).</span><span class="f">Σ (días transcurridos ÷ días de vigencia) × cuota</span></span></span></div><div class="value">99.751,94</div></div><div class="kpi-card"><div class="label"><span class="tip">N° de Recibos<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Cantidad de recibos emitidos en la ventana.</span><span class="f">conteo de recibos</span></span></span></div><div class="value">6.494</div></div><div class="kpi-card"><div class="label"><span class="tip">Expuestos<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Exposición media a riesgo en la ventana, en vehículos-equivalentes.</span><span class="f">Σ (días de cobertura en la ventana ÷ días de la ventana)</span></span></span></div><div class="value">5.457,41</div></div></div><div class="kpi-grid"><div class="kpi-card"><div class="label"><span class="tip">Prima Devengada por Expuesto<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Cuota devengada por vehículo expuesto en la ventana.</span><span class="f">Cuota Devengada ÷ Expuestos</span></span></span></div><div class="value">18,28</div></div><div class="kpi-card"><div class="label"><span class="tip">% Tasa de Uso<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Frecuencia de uso del servicio respecto a la exposición.</span><span class="f">N° Reclamos ÷ Expuestos</span></span></span></div><div class="value">4,10%</div></div><div class="kpi-card"><div class="label"><span class="tip">Prima Promedio por Recibo<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Cuota cobrada media por recibo.</span><span class="f">Cuota Cobrada ÷ N° Recibos</span></span></span></div><div class="value">15,24</div></div></div><div class="charts-grid"><div class="chart-card"><h3>Resultados</h3><div class="chart-host"><canvas id="chart-res-ej"></canvas></div></div><div class="chart-card"><h3>Indicadores</h3><div class="chart-host"><canvas id="chart-ind-ej"></canvas></div></div></div></div>
+<p class="note"><strong>Prima no devengada (reserva de riesgo en curso).</strong> La parte de la cuota cobrada que todavía no se gana (cuota cobrada menos devengada) suma <strong>64.571,45 USD</strong> en el histórico, un 26,6% de la cuota cobrada. Es prima ya cobrada que respalda cobertura futura, la reserva por riesgos en curso del producto.</p>
+</section>
+
+<!-- III -->
+<section><div class="section-head"><span class="num">III</span><h2>Análisis de Reclamos</h2></div>
+<p class="narrative">Desde el inicio de operaciones se han registrado <strong>583 reclamos</strong>, de los cuales <strong>24</strong> corresponden a agosto 2026 -frente a 11 casos en julio-. Los gráficos siguientes abren esos reclamos por mes, por tipo de avería, por tipo de vehículo, por estado y por tipo de servicio.</p>
+<div class="charts-grid">
+<div class="chart-card full"><h3>Reclamos por Mes</h3><p class="sub">N° de reclamos registrados en cada mes</p><div class="chart-host" style="height:340px"><canvas id="chart-sin-evol"></canvas></div></div>
+</div>
+
+<div class="sub-head">Avería por Tipo de Vehículo</div>
+<p class="narrative">El cruce confirma que la cartera de Seguros Venezuela es de vehículos livianos. <strong>"No Enciende"</strong>, la avería más frecuente, recae sobre todo en sedanes (199 de 247 casos) y camionetas. Los camiones son marginales, apenas 8 reclamos en toda la base, de modo que el segmento de carga, que en otras carteras concentra los casos más pesados, aquí es irrelevante.</p>
+<div class="charts-grid"><div class="chart-card full"><h3>Avería × Tipo de Vehículo</h3><p class="sub">N° de reclamos por tipo (clasificación de la base de reclamos)</p><div class="chart-host" style="height:260px"><canvas id="chart-av-tipo"></canvas></div></div></div>
+<div class="sub-head">Reclamos por Tipo de Avería</div>
+<p class="narrative">La principal causa sigue siendo "No Enciende" con 247 casos, seguida de "Choque O Accidente" con 91 casos.</p>
+<div class="charts-grid"><div class="chart-card full"><h3>Top 10 - Tipo de Avería</h3><div class="chart-host"><canvas id="chart-averia"></canvas></div></div></div>
+<div class="sub-head">Reclamos por Estado</div>
+<p class="narrative">Dtto. Capital lidera con 322 casos, seguido de Aragua con 54 casos.</p>
+<div class="charts-grid"><div class="chart-card full"><h3>Top 10 - Estado</h3><div class="chart-host"><canvas id="chart-estado"></canvas></div></div></div>
+<div class="sub-head">Reclamos por Tipo de Servicio</div>
+<p class="narrative">El gráfico muestra qué clase de asistencia se prestó en cada reclamo. Grúas Liviana representa el 98,11% de los casos, el servicio de remolque para autos y camionetas que no encienden o quedan varados. Las grúas pesadas, para camiones, son apenas el 1,37%, lo que confirma que la cartera es de vehículos livianos.</p>
+<div class="charts-grid"><div class="chart-card full"><h3>Tipo de Servicio</h3><div class="chart-host" style="height:180px"><canvas id="chart-servicio"></canvas></div></div></div>
+</section>
+
+
+<!-- COBRANZA -->
+<section><div class="section-head"><span class="num">IV</span><h2>Cobranza</h2></div>
+<p class="narrative">Esta sección mide la rapidez con que se cobran los recibos, no el porcentaje cobrado. El archivo mensual contiene únicamente recibos ya cobrados, de modo que aquí no medimos saldos pendientes, sino el tiempo que tomó cada cobro. El tiempo de cobro se calcula como los días transcurridos entre el inicio de vigencia del recibo y su fecha de estatus, que para los recibos cobrados corresponde a la fecha de cobro.</p>
+<div class="kpi-grid">
+<div class="kpi-card accent"><div class="label">Tiempo Mediano de Cobro</div><div class="value">11 d</div><div class="sub">la mitad se cobra antes</div></div>
+<div class="kpi-card"><div class="label">Cobrado en 30 días o Menos</div><div class="value">64,0%</div><div class="sub">sobre el inicio de vigencia</div></div>
+<div class="kpi-card positive"><div class="label">Cobrado en 90 días o Menos</div><div class="value">90,4%</div></div>
+<div class="kpi-card"><div class="label">Cobrado por Anticipado</div><div class="value">4,4%</div><div class="sub">antes del inicio de vigencia</div></div>
+</div>
+<p class="narrative">La mayoría de los recibos se cobra muy rápido. Algo más de la mitad (52,2%) se salda dentro de los primeros 15 días de vigencia, y cerca de dos tercios dentro del primer mes. Un 22,5% se cobra entre 31 y 60 días, y solo un 5,2% tarda más de 90 días. Un 4,4% se paga por anticipado, antes de que arranque la cobertura del recibo.</p>
+<div class="charts-grid"><div class="chart-card full"><h3>Distribución del Tiempo de Cobro</h3><p class="sub">N° de recibos por tramo de días</p><div class="chart-host" style="height:280px"><canvas id="chart-cob-dist"></canvas></div></div></div>
+<p class="narrative">En los meses recientes la mediana del tiempo de cobro se mueve entre 6 y 20 días, una cobranza ágil. Agosto cierra en 6 días. El punto alto de julio no es un deterioro de la cobranza, responde al lote con vigencias retroactivas de ese mes, donde el recibo se cobró bastante después del arranque de su cobertura. La línea sigue la mediana de días de cada mes, más estable que el promedio porque no se deja arrastrar por unos pocos recibos de cobro tardío.</p>
+<div class="charts-grid"><div class="chart-card full"><h3>Evolución del Tiempo Mediano de Cobro</h3><p class="sub">Mediana de días por mes, desde septiembre 2024 hasta agosto 2026</p><div class="chart-host" style="height:280px"><canvas id="chart-cob-evo"></canvas></div></div></div>
+</section>
+
+<!-- VI -->
+<section><div class="section-head"><span class="num">V</span><h2>Vehículos Activos</h2></div>
+<p class="narrative">La cartera cerró agosto en <strong>4.488 vehículos activos</strong>, frente a <strong>4.996 en julio</strong> (recalculado sobre la data de hoy), una baja de <strong>508 unidades (-10,2%)</strong>. Una póliza se considera activa al cierre del mes si su fecha de inicio más temprana es menor o igual a la fecha de corte y su fecha de fin más tardía es mayor o igual a la misma. El producto creció desde 9 vehículos en septiembre 2024 hasta un pico de <strong>5.515 en febrero 2026</strong>, y desde entonces la cartera cede de forma gradual. La baja de agosto es la mayor del ejercicio en unidades y conviene tomarla como provisional, porque el mes de cierre siempre se ve con más vencimientos y menos incorporaciones de las que terminará teniendo.</p>
+<div class="note"><strong>Reexpresión de la serie de 2026.</strong> El lote de agosto llegó con 681 recibos frente a los 1.277 de julio, es decir con un volumen normal, y solo 260 de ellos traen vigencia anterior al cierre de julio. La corrección de la serie es por eso mucho menor que la del cierre pasado. El corte de julio sube de 4.789 a 4.996 vehículos activos, un 4,3%, y los meses de enero a junio se mueven apenas entre 3 y 63 pólizas. La lectura de fondo se mantiene, la cartera cede desde el pico pero de forma gradual, y los archivos ya entregados no se modifican.</div>
+<div class="note"><strong>Nota.</strong> La cifra de julio (corte 31-jul) queda en 4.996 al recalcularse sobre la data de hoy, que ya incluye bordereaux de carga tardía, es decir pólizas con efecto retroactivo a julio cargadas en el lote de agosto. El cierre anterior que se entregó reportaba 4.789 con la data de ese momento, una diferencia de 207 pólizas o 4,3%, y ese archivo no se toca. El movimiento neto del mes mezcla entonces vencimientos reales con la maduración propia de la data, así que el número de agosto puede subir en cierres posteriores. La comparación se hace siempre contra el julio recalculado, nunca contra el valor reportado.</div>
+<div class="tab-bar" data-tabgroup="va"><button class="tab-btn active" data-tab="evo">Evolución Histórica</button><button class="tab-btn" data-tab="pers">Persistencia</button></div>
+<div class="tab-content active" id="tab-va-evo">
+<div class="kpi-grid">
+<div class="kpi-card accent"><div class="label"><span class="tip">Vehículos Activos<span class="ic">i</span><span class="box"><b>Definición</b><span class="d">Pólizas vigentes a la fecha de corte.</span><span class="f">pólizas con FD_min ≤ corte ≤ FH_max</span></span></span></div><div class="value">4.488</div><div class="sub">vs 4.996 en julio (recalculado)</div><span class="chip chip-down">▼ 10,2% vs julio</span></div>
+<div class="kpi-card"><div class="label">Pico Histórico</div><div class="value">5.515</div><div class="sub">Alcanzado en febrero 2026</div></div>
+<div class="kpi-card"><div class="label">Promedio Mensual</div><div class="value">3.242,1</div><div class="sub">24 meses de operación</div></div>
+<div class="kpi-card"><div class="label">Vehículos Activos al Inicio</div><div class="value">9</div><div class="sub">Sep-24 (inicio de operación)</div></div>
+</div>
+<div class="charts-grid">
+<div class="chart-card full"><h3>Evolución Mensual del Total de Vehículos Activos</h3><p class="sub">Desde septiembre 2024 hasta agosto 2026</p><div class="chart-host" style="height:340px"><canvas id="chart-va-evo"></canvas></div></div>
+</div>
+</div>
+<div class="tab-content" id="tab-va-pers">
+<p class="narrative">La <strong>persistencia</strong> es la tasa de retención de la cartera, qué proporción de las pólizas activas al cierre del mes anterior sigue activa al cierre de este. Lo que no se retiene es <em>churn</em>. El movimiento cuadra de esta forma, los vehículos activos del mes son los retenidos más las altas.</p>
+<div class="kpi-grid">
+<div class="kpi-card accent"><div class="label">Persistencia (Agosto)</div><div class="value">86,7%</div><div class="sub">Promedio histórico de 92,6%</div></div>
+<div class="kpi-card alert"><div class="label">Churn (Agosto)</div><div class="value">13,3%</div><div class="sub">sobre base de 4.996</div></div>
+<div class="kpi-card positive"><div class="label">Altas del Mes</div><div class="value">157</div><div class="sub">nuevas pólizas activas</div></div>
+<div class="kpi-card alert"><div class="label">Bajas del Mes</div><div class="value">665</div><div class="sub">vencidas sin renovar</div></div>
+</div>
+<div class="note"><strong>Lectura.</strong> La retención de agosto (86,7%) cae respecto al promedio histórico (92,6%). Parte de esa caída es real, por los vencimientos del mes, y parte es maduración de data, ya que la base aún no incluye los recibos de renovación cargados con retraso, de modo que algunas de las bajas de agosto pueden reaparecer en el cierre de septiembre. El cierre pasado ilustra bien el punto, las bajas de julio se reportaron en 525 y al recalcularlas hoy quedan en 450, una corrección de 14,3%. Conviene leer la tendencia, no el dato puntual. Por eso los dos últimos meses van punteados.</div>
+<div class="charts-grid"><div class="chart-card full"><h3>Persistencia Mensual</h3><p class="sub">% de retención del base activo, mes a mes</p><div class="chart-host" style="height:300px"><canvas id="chart-pers-ret"></canvas></div></div></div>
+<div class="charts-grid"><div class="chart-card full"><h3>Movimiento de Cartera</h3><p class="sub">Altas y bajas de pólizas activas por mes</p><div class="chart-host" style="height:300px"><canvas id="chart-pers-mov"></canvas></div></div></div>
+<div class="note"><strong>Cómo leer el último mes.</strong> Las barras de los dos meses más recientes van atenuadas porque todavía están madurando. El mes de cierre suele mostrar más bajas y menos altas de las que terminará teniendo, ya que las renovaciones del mes siguiente aún no se han cargado. En los cierres recientes, entre un 14% y un 43% de las bajas que se veían al inicio resultaron ser renovaciones que entraron después. Por eso el movimiento neto del último mes se ve más negativo de lo que será y conviene mirar la tendencia de varios meses, no la barra puntual del cierre.</div>
+</div>
+</section>
+
+<!-- VI -->
+
+
+<footer class="colophon"><div class="col"><h5>Metodología</h5><p>Cuota devengada pro-rata temporis - Expuestos a riesgo como unidad de exposición - Vehículos Activos contados por póliza vigente a la fecha de corte</p></div>
+<div class="col"><h5>Fuentes</h5><p>Bordereauxs de cuotas cobradas y reclamaciones hasta agosto 2026 - Cifras en USD</p></div></footer>
+</div>
+<script>
+var ES_INTERNO=false;
+var SER_RES=[{"l": "Cuota Cobrada", "f": "CC", "c": "#4285F4"}, {"l": "Cuota Devengada", "f": "Dev", "c": "#C5221F"}];
+var SER_IND=[{"l": "% Tasa de Uso", "f": "TasaUso", "c": "#A142F4"}];
+var DATA={"empresa": "Seguros Venezuela", "producto": "Asistencia Vial", "mes": "ago", "anio": 2026, "meses_op": 24, "fecha_corte": "2026-08-31", "total_recibos": 16185, "total_sin": 583, "nuevos_recibos": 681, "nuevos_sin": 24, "cc_mes": 10756.416666666666, "cc_mes_anterior": 25829.75, "va_total_actual": 4488, "va_total_anterior": 4996, "va_reportado_anterior": 4789, "va_chip": {"abs": -508, "pct": -10.168134507606084}, "neg_dur": 2, "serial_dates": 1291, "hist": {"mid": 32, "CC": 242772.00372934938, "Dev": 178200.55703293576, "VA": 4488.0, "Exp": 3245.3662551440325, "NRec": 583, "PrimaProm_Veh": 54.09358371866074, "PrimaProm_Rec": 14.99981487360824, "TasaUso": 0.17964074134188157, "NRecibos": 16185}, "m12": {"mid": 32, "CC": 165080.8333333333, "Dev": 141506.0440280623, "VA": 4488.0, "Exp": 5201.815934065934, "NRec": 352, "PrimaProm_Veh": 36.78271687462863, "PrimaProm_Rec": 15.088276513420466, "TasaUso": 0.06766867656635125, "NRecibos": 10941}, "ej": {"mid": 32, "CC": 98969.33333333333, "Dev": 99751.94231000132, "VA": 4488.0, "Exp": 5457.409090909091, "NRec": 224, "PrimaProm_Veh": 22.05199049316696, "PrimaProm_Rec": 15.240119084282927, "TasaUso": 0.04104511797972731, "NRecibos": 6494}, "suf": [], "labels_hist": ["Sep-24", "Oct-24", "Nov-24", "Dic-24", "Ene-25", "Feb-25", "Mar-25", "Abr-25", "May-25", "Jun-25", "Jul-25", "Ago-25", "Sep-25", "Oct-25", "Nov-25", "Dic-25", "Ene-26", "Feb-26", "Mar-26", "Abr-26", "May-26", "Jun-26", "Jul-26", "Ago-26"], "labels_12m": ["Sep-25", "Oct-25", "Nov-25", "Dic-25", "Ene-26", "Feb-26", "Mar-26", "Abr-26", "May-26", "Jun-26", "Jul-26", "Ago-26"], "labels_ej": ["Ene-26", "Feb-26", "Mar-26", "Abr-26", "May-26", "Jun-26", "Jul-26", "Ago-26"], "labels_all": ["Sep-24", "Oct-24", "Nov-24", "Dic-24", "Ene-25", "Feb-25", "Mar-25", "Abr-25", "May-25", "Jun-25", "Jul-25", "Ago-25", "Sep-25", "Oct-25", "Nov-25", "Dic-25", "Ene-26", "Feb-26", "Mar-26", "Abr-26", "May-26", "Jun-26", "Jul-26", "Ago-26"], "hist_series": [{"mid": 9, "CC": 24.666666666666668, "Dev": 1.4096459096459097, "VA": 9, "Exp": 0.896551724137931, "NRec": 0, "PrimaProm_Veh": 2.740740740740741, "PrimaProm_Rec": 2.740740740740741, "TasaUso": 0.0, "NRecibos": 9}, {"mid": 10, "CC": 360.3302858736667, "Dev": 144.67288068164757, "VA": 108, "Exp": 28.816666666666663, "NRec": 0, "PrimaProm_Veh": 3.336391535867284, "PrimaProm_Rec": 3.71474521519244, "TasaUso": 0.0, "NRecibos": 97}, {"mid": 11, "CC": 3241.3302858736665, "Dev": 557.4903752365589, "VA": 311, "Exp": 75.03333333333333, "NRec": 0, "PrimaProm_Veh": 10.422283877407288, "PrimaProm_Rec": 11.453463907680801, "TasaUso": 0.0, "NRecibos": 283}, {"mid": 12, "CC": 7516.996952540334, "Dev": 1713.818995158819, "VA": 488, "Exp": 160.6198347107438, "NRec": 3, "PrimaProm_Veh": 15.403682279795767, "PrimaProm_Rec": 14.290868731065274, "TasaUso": 0.01867764342680731, "NRecibos": 526}, {"mid": 13, "CC": 15002.003729349333, "Dev": 3240.80077100452, "VA": 638, "Exp": 239.1513157894737, "NRec": 9, "PrimaProm_Veh": 23.51411242844723, "PrimaProm_Rec": 16.856183965561048, "TasaUso": 0.03763307749442931, "NRecibos": 890}, {"mid": 14, "CC": 21896.003729349333, "Dev": 5229.828602769339, "VA": 902, "Exp": 328.9333333333333, "NRec": 28, "PrimaProm_Veh": 24.274948702161122, "PrimaProm_Rec": 16.5502673691227, "TasaUso": 0.08512363194162953, "NRecibos": 1323}, {"mid": 15, "CC": 27569.170396016, "Dev": 8064.012375602289, "VA": 1214, "Exp": 438.7535545023697, "NRec": 52, "PrimaProm_Veh": 22.709366059321255, "PrimaProm_Rec": 16.150656353846514, "TasaUso": 0.11851755835682729, "NRecibos": 1707}, {"mid": 16, "CC": 36911.837062682665, "Dev": 11694.56664552895, "VA": 1811, "Exp": 573.1369294605809, "NRec": 103, "PrimaProm_Veh": 20.382019360951222, "PrimaProm_Rec": 16.2750604332816, "TasaUso": 0.1797127260617118, "NRecibos": 2268}, {"mid": 17, "CC": 48897.170396016, "Dev": 16544.293390483777, "VA": 2251, "Exp": 745.9117647058824, "NRec": 153, "PrimaProm_Veh": 21.722421322086184, "PrimaProm_Rec": 15.522911236830476, "TasaUso": 0.2051180947123536, "NRecibos": 3150}, {"mid": 18, "CC": 59493.837062682665, "Dev": 22065.55535277916, "VA": 2564, "Exp": 916.8907284768212, "NRec": 172, "PrimaProm_Veh": 23.203524595430057, "PrimaProm_Rec": 15.196382391489825, "TasaUso": 0.1875905106879354, "NRecibos": 3915}, {"mid": 19, "CC": 69805.50372934934, "Dev": 28672.4489743761, "VA": 3042, "Exp": 1096.282282282282, "NRec": 193, "PrimaProm_Veh": 22.947239884730223, "PrimaProm_Rec": 15.080039690937424, "TasaUso": 0.1760495477480538, "NRecibos": 4629}, {"mid": 20, "CC": 77691.17039601601, "Dev": 36423.85359694006, "VA": 3585, "Exp": 1287.8434065934066, "NRec": 231, "PrimaProm_Veh": 21.67117723738243, "PrimaProm_Rec": 14.8152498848238, "TasaUso": 0.17936963361954028, "NRecibos": 5244}, {"mid": 21, "CC": 91878.67039601601, "Dev": 45104.55830821318, "VA": 4199, "Exp": 1489.098984771574, "NRec": 259, "PrimaProm_Veh": 21.88108368564325, "PrimaProm_Rec": 14.86228896732708, "TasaUso": 0.17393068066575193, "NRecibos": 6182}, {"mid": 22, "CC": 107202.00372934934, "Dev": 55286.147561489866, "VA": 4804, "Exp": 1710.9199999999998, "NRec": 309, "PrimaProm_Veh": 22.315154814602277, "PrimaProm_Rec": 14.760017035570609, "TasaUso": 0.18060458700582144, "NRecibos": 7263}, {"mid": 23, "CC": 125408.83706268267, "Dev": 66245.90569390335, "VA": 5065, "Exp": 1929.9186813186811, "NRec": 343, "PrimaProm_Veh": 24.759888857390457, "PrimaProm_Rec": 14.66084136809477, "TasaUso": 0.17772769563826069, "NRecibos": 8554}, {"mid": 24, "CC": 143802.670396016, "Dev": 78060.87998393568, "VA": 5232, "Exp": 2139.6913580246915, "NRec": 359, "PrimaProm_Veh": 27.485219876914375, "PrimaProm_Rec": 14.838785511919927, "TasaUso": 0.16778120762772986, "NRecibos": 9691}, {"mid": 25, "CC": 154405.00372934935, "Dev": 90290.68485030097, "VA": 5428, "Exp": 2333.5841392649904, "NRec": 368, "PrimaProm_Veh": 28.44602132080865, "PrimaProm_Rec": 14.767119713977559, "TasaUso": 0.15769733510269274, "NRecibos": 10456}, {"mid": 26, "CC": 164185.8370626827, "Dev": 101648.09156127925, "VA": 5515, "Exp": 2495.8788990825688, "NRec": 391, "PrimaProm_Veh": 29.770777345908012, "PrimaProm_Rec": 14.871905531040099, "TasaUso": 0.15665824176955187, "NRecibos": 11040}, {"mid": 27, "CC": 168256.17039601604, "Dev": 114227.36095504856, "VA": 5449, "Exp": 2658.6475694444443, "NRec": 407, "PrimaProm_Veh": 30.87835756946523, "PrimaProm_Rec": 14.443829547258652, "TasaUso": 0.15308535237148693, "NRecibos": 11649}, {"mid": 28, "CC": 183280.42039601604, "Dev": 126389.35313534187, "VA": 5318, "Exp": 2794.904290429043, "NRec": 427, "PrimaProm_Veh": 34.46416329372246, "PrimaProm_Rec": 14.641350087555203, "TasaUso": 0.15277804018628904, "NRecibos": 12518}, {"mid": 29, "CC": 197321.25372934938, "Dev": 139355.60180171806, "VA": 5191, "Exp": 2929.4427001569857, "NRec": 507, "PrimaProm_Veh": 38.01218526860901, "PrimaProm_Rec": 14.486546782860978, "TasaUso": 0.1730704614815748, "NRecibos": 13621}, {"mid": 30, "CC": 206185.83706268272, "Dev": 152169.61472669189, "VA": 5202, "Exp": 3049.238380809595, "NRec": 548, "PrimaProm_Veh": 39.63587794361452, "PrimaProm_Rec": 14.492573069704275, "TasaUso": 0.1797170084991853, "NRecibos": 14227}, {"mid": 31, "CC": 232015.58706268272, "Dev": 165457.02992912813, "VA": 4996, "Exp": 3158.8008595988535, "NRec": 559, "PrimaProm_Veh": 46.440269628239136, "PrimaProm_Rec": 14.964885646457864, "TasaUso": 0.1769658882741311, "NRecibos": 15504}, {"mid": 32, "CC": 242772.00372934938, "Dev": 178200.55703293576, "VA": 4488, "Exp": 3245.3662551440325, "NRec": 583, "PrimaProm_Veh": 54.09358371866074, "PrimaProm_Rec": 14.99981487360824, "TasaUso": 0.17964074134188157, "NRecibos": 16185}], "m12_series": [{"mid": 21, "CC": 14187.5, "Dev": 8410.045303339695, "VA": 4199, "Exp": 3941.1724137931033, "NRec": 28, "PrimaProm_Veh": 3.378780662062396, "PrimaProm_Rec": 15.125266524520256, "TasaUso": 0.007104484924842949, "NRecibos": 938}, {"mid": 22, "CC": 29510.833333333336, "Dev": 18591.634556616384, "VA": 4804, "Exp": 4245.5, "NRec": 78, "PrimaProm_Veh": 6.142971135165141, "PrimaProm_Rec": 14.616559352814926, "TasaUso": 0.018372394299846898, "NRecibos": 2019}, {"mid": 23, "CC": 47717.66666666667, "Dev": 29551.392689029864, "VA": 5065, "Exp": 4507.8, "NRec": 112, "PrimaProm_Veh": 9.421059559065483, "PrimaProm_Rec": 14.41621349446123, "TasaUso": 0.024845822796042416, "NRecibos": 3310}, {"mid": 24, "CC": 66111.5, "Dev": 41366.36697906218, "VA": 5232, "Exp": 4689.909090909091, "NRec": 128, "PrimaProm_Veh": 12.63599006116208, "PrimaProm_Rec": 14.866539239937037, "TasaUso": 0.027292639903855474, "NRecibos": 4447}, {"mid": 25, "CC": 76713.83333333333, "Dev": 53596.17184542748, "VA": 5428, "Exp": 4829.289473684211, "NRec": 137, "PrimaProm_Veh": 14.132983296487348, "PrimaProm_Rec": 14.718694039396263, "TasaUso": 0.02836856244516737, "NRecibos": 5212}, {"mid": 26, "CC": 86494.66666666666, "Dev": 64953.57855640576, "VA": 5515, "Exp": 4932.461111111112, "NRec": 160, "PrimaProm_Veh": 15.683529767301298, "PrimaProm_Rec": 14.92316540142627, "TasaUso": 0.03243816755890399, "NRecibos": 5796}, {"mid": 27, "CC": 90564.99999999999, "Dev": 77532.84795017508, "VA": 5449, "Exp": 5018.815165876777, "NRec": 176, "PrimaProm_Veh": 16.620480822169203, "PrimaProm_Rec": 14.139734582357532, "TasaUso": 0.03506803781032512, "NRecibos": 6405}, {"mid": 28, "CC": 105589.25, "Dev": 89694.84013046838, "VA": 5318, "Exp": 5067.639004149378, "NRec": 196, "PrimaProm_Veh": 19.85506769462204, "PrimaProm_Rec": 14.51598157822381, "TasaUso": 0.03867678811365912, "NRecibos": 7274}, {"mid": 29, "CC": 119630.08333333333, "Dev": 102661.08879684459, "VA": 5191, "Exp": 5123.691176470588, "NRec": 276, "PrimaProm_Veh": 23.04567199640403, "PrimaProm_Rec": 14.280778719509769, "TasaUso": 0.05386741520790101, "NRecibos": 8377}, {"mid": 30, "CC": 128494.66666666666, "Dev": 115475.10172181841, "VA": 5202, "Exp": 5170.301324503311, "NRec": 317, "PrimaProm_Veh": 24.701012431116236, "PrimaProm_Rec": 14.304204237634048, "TasaUso": 0.06131170701747308, "NRecibos": 8983}, {"mid": 31, "CC": 154324.41666666666, "Dev": 128762.51692425465, "VA": 4996, "Exp": 5202.4984984984985, "NRec": 328, "PrimaProm_Veh": 30.889595009340805, "PrimaProm_Rec": 15.041366146848603, "TasaUso": 0.06304663040165502, "NRecibos": 10260}, {"mid": 32, "CC": 165080.8333333333, "Dev": 141506.0440280623, "VA": 4488, "Exp": 5201.815934065934, "NRec": 352, "PrimaProm_Veh": 36.78271687462863, "PrimaProm_Rec": 15.088276513420466, "TasaUso": 0.06766867656635125, "NRecibos": 10941}], "ej_series": [{"mid": 25, "CC": 10602.333333333334, "Dev": 11842.070127366529, "VA": 5428, "Exp": 5376.133333333333, "NRec": 9, "PrimaProm_Veh": 1.9532670105625154, "PrimaProm_Rec": 13.85925925925926, "TasaUso": 0.0016740656233724363, "NRecibos": 765}, {"mid": 26, "CC": 20383.166666666668, "Dev": 23199.4768383448, "VA": 5515, "Exp": 5432.327586206897, "NRec": 32, "PrimaProm_Veh": 3.6959504381988517, "PrimaProm_Rec": 15.1098344452681, "TasaUso": 0.005890660953741173, "NRecibos": 1349}, {"mid": 27, "CC": 24453.5, "Dev": 35778.74623211413, "VA": 5449, "Exp": 5462.943820224718, "NRec": 48, "PrimaProm_Veh": 4.4877041659020005, "PrimaProm_Rec": 12.489019407558734, "TasaUso": 0.008786471466592076, "NRecibos": 1958}, {"mid": 28, "CC": 39477.75, "Dev": 47940.73841240742, "VA": 5318, "Exp": 5449.857142857143, "NRec": 68, "PrimaProm_Veh": 7.423420458819105, "PrimaProm_Rec": 13.96453837990803, "TasaUso": 0.012477391281553906, "NRecibos": 2827}, {"mid": 29, "CC": 53518.583333333336, "Dev": 60906.987078783626, "VA": 5191, "Exp": 5472.506666666666, "NRec": 148, "PrimaProm_Veh": 10.309879278237977, "PrimaProm_Rec": 13.617960135708229, "TasaUso": 0.027044279525774907, "NRecibos": 3930}, {"mid": 30, "CC": 62383.16666666667, "Dev": 73721.00000375746, "VA": 5202, "Exp": 5492.572222222222, "NRec": 189, "PrimaProm_Veh": 11.992150454953224, "PrimaProm_Rec": 13.752902704291595, "TasaUso": 0.03441010738745154, "NRecibos": 4536}, {"mid": 31, "CC": 88212.91666666667, "Dev": 87008.41520619369, "VA": 4996, "Exp": 5496.037914691943, "NRec": 200, "PrimaProm_Veh": 17.65670870029357, "PrimaProm_Rec": 15.17511038476977, "TasaUso": 0.03638985085335063, "NRecibos": 5813}, {"mid": 32, "CC": 98969.33333333333, "Dev": 99751.94231000132, "VA": 4488, "Exp": 5457.409090909091, "NRec": 224, "PrimaProm_Veh": 22.05199049316696, "PrimaProm_Rec": 15.240119084282927, "TasaUso": 0.04104511797972731, "NRecibos": 6494}], "cc_monthly": [24.666666666666668, 335.663619207, 2881.0, 4275.666666666667, 7485.006776809, 6894.0, 5673.166666666667, 9342.666666666666, 11985.333333333334, 10596.666666666666, 10311.666666666666, 7885.666666666667, 14187.5, 15323.333333333334, 18206.833333333332, 18393.833333333332, 10602.333333333334, 9780.833333333334, 4070.3333333333335, 15024.25, 14040.833333333334, 8864.583333333334, 25829.75, 10756.416666666666], "dev_monthly": [1.4096459096459097, 143.26323477200165, 412.81749455491126, 1156.3286199222603, 1526.981775845701, 1989.0278317648194, 2834.183772832949, 3630.5542699266616, 4849.726744954827, 5521.261962295383, 6606.893621596941, 7751.404622563961, 8680.704711273116, 10181.589253276688, 10959.75813241348, 11814.974290032333, 12229.804866365288, 11357.406710978277, 12579.269393769311, 12161.99218029331, 12966.248666376196, 12814.012924973824, 13287.415202436241, 12743.527103807632], "sin_monthly": [], "cc_cum": [24.666666666666668, 360.3302858736667, 3241.3302858736665, 7516.996952540334, 15002.003729349333, 21896.003729349333, 27569.170396016, 36911.837062682665, 48897.170396016, 59493.837062682665, 69805.50372934934, 77691.17039601601, 91878.67039601601, 107202.00372934934, 125408.83706268267, 143802.670396016, 154405.00372934935, 164185.8370626827, 168256.17039601604, 183280.42039601604, 197321.25372934938, 206185.83706268272, 232015.58706268272, 242772.00372934938], "dev_cum": [1.4096459096459097, 144.67288068164757, 557.4903752365589, 1713.818995158819, 3240.80077100452, 5229.828602769339, 8064.012375602289, 11694.56664552895, 16544.293390483777, 22065.55535277916, 28672.4489743761, 36423.85359694006, 45104.55830821318, 55286.147561489866, 66245.90569390335, 78060.87998393568, 90290.68485030097, 101648.09156127925, 114227.36095504856, 126389.35313534187, 139355.60180171806, 152169.61472669189, 165457.02992912813, 178200.55703293576], "sin_cum": [], "sin_mes": [["Dic-24", 3], ["Ene-25", 6], ["Feb-25", 19], ["Mar-25", 24], ["Abr-25", 51], ["May-25", 50], ["Jun-25", 19], ["Jul-25", 21], ["Ago-25", 38], ["Sep-25", 28], ["Oct-25", 50], ["Nov-25", 34], ["Dic-25", 16], ["Ene-26", 9], ["Feb-26", 23], ["Mar-26", 16], ["Abr-26", 20], ["May-26", 80], ["Jun-26", 41], ["Jul-26", 11], ["Ago-26", 24]], "sin_averia": [["No Enciende", 247], ["Choque O Accidente", 91], ["Recalentamiento", 45], ["Motor", 34], ["Bomba De Gasolina", 31], ["Caja De Velocidades", 28], ["Electricidad", 27], ["Correa De Los Tiempos", 19], ["Tren Delantero", 11], ["Encendido", 11]], "sin_estado": [["Dtto. Capital", 322], ["Aragua", 54], ["Carabobo", 42], ["Miranda", 38], ["Zulia", 23], ["Anzoátegui", 19], ["Lara", 15], ["La Guaira", 14], ["Barinas", 10], ["Monagas", 7]], "sin_servicio": [["Grúas Liviana", 572, 98.11], ["Grúas Pesada", 8, 1.37], ["Amis", 2, 0.34], ["Taxi", 1, 0.17]], "va_hist": [9, 108, 311, 488, 638, 902, 1214, 1811, 2251, 2564, 3042, 3585, 4199, 4804, 5065, 5232, 5428, 5515, 5449, 5318, 5191, 5202, 4996, 4488], "va_pico": 5515, "va_pico_label": "Feb-26", "va_promedio": 3242.08, "va_inicial": 9, "spark": {"cc": [91878.67039601601, 107202.00372934934, 125408.83706268267, 143802.670396016, 154405.00372934935, 164185.8370626827, 168256.17039601604, 183280.42039601604, 197321.25372934938, 206185.83706268272, 232015.58706268272, 242772.00372934938], "dev": [45104.55830821318, 55286.147561489866, 66245.90569390335, 78060.87998393568, 90290.68485030097, 101648.09156127925, 114227.36095504856, 126389.35313534187, 139355.60180171806, 152169.61472669189, 165457.02992912813, 178200.55703293576], "va": [4199, 4804, 5065, 5232, 5428, 5515, 5449, 5318, 5191, 5202, 4996, 4488], "rt": []}, "chips": {"cc": {"abs": 10756.416666666657, "pct": 4.636075016701632}, "dev": {"abs": 12743.527103807632, "pct": 7.702016112138719}}, "sev_buckets": [], "sin_top10": [], "av_tipo": {"tipos": ["Sedan", "Camionetas", "Camiones", "Otros"], "averias": [{"averia": "No Enciende", "vals": [199, 48, 0, 0]}, {"averia": "Choque O Accidente", "vals": [46, 42, 1, 2]}, {"averia": "Recalentamiento", "vals": [31, 13, 1, 0]}, {"averia": "Motor", "vals": [23, 9, 2, 0]}, {"averia": "Bomba De Gasolina", "vals": [20, 8, 2, 1]}, {"averia": "Caja De Velocidades", "vals": [19, 8, 1, 0]}]}, "tv_total": {"Sedan": 409, "Camionetas": 163, "Camiones": 8, "Otros": 3}, "retro_carga": {"lote": 681, "retro": 260, "retro_mes_previo": 77, "lote_anterior": 1277}, "lr_monthly": [], "lr_cum": [], "nodev": {"hist": 64571.44669641362, "m12": 23574.789305271028, "ej": -782.6089766679943}, "pers_labels": ["Oct-24", "Nov-24", "Dic-24", "Ene-25", "Feb-25", "Mar-25", "Abr-25", "May-25", "Jun-25", "Jul-25", "Ago-25", "Sep-25", "Oct-25", "Nov-25", "Dic-25", "Ene-26", "Feb-26", "Mar-26", "Abr-26", "May-26", "Jun-26", "Jul-26", "Ago-26"], "pers_ret_pct": [77.8, 81.5, 86.2, 88.7, 94.7, 89.8, 94.9, 95.5, 94.9, 96.9, 97.1, 98.0, 98.0, 96.3, 95.4, 96.5, 96.0, 94.0, 92.5, 92.7, 94.5, 91.3, 86.7], "pers_base": [9, 108, 311, 488, 638, 902, 1214, 1811, 2251, 2564, 3042, 3585, 4199, 4804, 5065, 5232, 5428, 5515, 5449, 5318, 5191, 5202, 4996], "pers_ret": [7, 88, 268, 433, 604, 810, 1152, 1729, 2136, 2484, 2953, 3514, 4115, 4628, 4834, 5051, 5209, 5182, 5043, 4930, 4908, 4752, 4331], "pers_lost": [2, 20, 43, 55, 34, 92, 62, 82, 115, 80, 89, 71, 84, 176, 231, 181, 219, 333, 406, 388, 283, 450, 665], "pers_new": [101, 223, 220, 205, 298, 404, 659, 522, 428, 558, 632, 685, 689, 437, 398, 377, 306, 267, 275, 261, 294, 244, 157], "pers_kpi": {"ret_pct": 86.7, "churn_pct": 13.3, "altas": 157, "bajas": 665, "base": 4996, "ret_prom": 92.6}, "cob_kpi": {"n": 16185, "mediana": 11, "media": 25.2, "p_ant": 4.4, "p30": 64.0, "p60": 86.5, "p90": 90.4}, "cob_buckets": [["Anticipado", 708, 4.4], ["0-15 d", 8451, 52.2], ["16-30 d", 1900, 11.7], ["31-60 d", 3642, 22.5], ["61-90 d", 641, 4.0], ["Más de 90 d", 843, 5.2]], "cob_med_month": [0, 0, 0, 1, 28, 5, 5, 11, 26, 14, 11, 9, 25, 27, 36, 18, 12, 7, 8, 8, 9, 6, 20, 6]};
+var SUF=[];
+
+function CH(id,cfg){var el=document.getElementById(id);if(!el)return null;return new Chart(el,cfg)}
+function fv(v,d){d=d||0;var s=Math.abs(v).toFixed(d);var p=s.split('.');var i=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.');var r=p.length>1?i+','+p[1]:i;return v<0?'-'+r:r}
+// Tema
+(function(){var saved=null;try{saved=localStorage.getItem('sv-theme')}catch(e){}
+ if(saved==='light')document.documentElement.classList.add('light');
+ var btn=document.getElementById('theme-toggle');
+ function lbl(){btn.textContent=document.documentElement.classList.contains('light')?'Modo oscuro':'Modo claro'}
+ lbl();
+ btn.addEventListener('click',function(){document.documentElement.classList.toggle('light');try{localStorage.setItem('sv-theme',document.documentElement.classList.contains('light')?'light':'dark')}catch(e){}lbl();});
+})();
+// Tabs (delegación)
+document.addEventListener('click',function(e){var btn=e.target.closest('.tab-btn');if(!btn)return;var bar=btn.parentElement;var group=bar.getAttribute('data-tabgroup');var tab=btn.getAttribute('data-tab');if(!group||!tab)return;bar.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');document.querySelectorAll('[id^="tab-'+group+'-"]').forEach(function(c){c.classList.remove('active')});var target=document.getElementById('tab-'+group+'-'+tab);if(target)target.classList.add('active')});
+// El salteo de etiquetas se ancla al ÚLTIMO punto de la serie, no al primero, para
+// que el mes de cierre siempre quede rotulado. El auto-skip de Chart.js saltea desde
+// el inicio y con un número par de puntos deja el mes de cierre sin etiqueta, aunque
+// el punto esté dibujado. Se envuelve el constructor para cubrir los 17 gráficos.
+(function(){
+  var _C = Chart;
+  function ejeMeses(cfg){
+    try{
+      var L = cfg && cfg.data && cfg.data.labels;
+      if(!L || L.length < 2) return;
+      if(!/^[A-Za-zÁÉÍÓÚáéíóú]{3}-\d{2}$/.test(String(L[0]))) return;
+      if(cfg.options && cfg.options.indexAxis === 'y') return;
+      cfg.options = cfg.options || {};
+      cfg.options.scales = cfg.options.scales || {};
+      cfg.options.scales.x = cfg.options.scales.x || {};
+      var t = cfg.options.scales.x.ticks = cfg.options.scales.x.ticks || {};
+      t.autoSkip = false; t.maxRotation = 45; t.minRotation = 45;
+      t.callback = function(val, idx, ticks){
+        var n = ticks.length, paso = Math.max(1, Math.ceil(n / 13));
+        return ((n - 1 - idx) % paso === 0) ? this.getLabelForValue(val) : '';
+      };
+    }catch(e){}
   }
-  .brand-mark{background:#fff}
-}
-*{box-sizing:border-box}
-html,body{margin:0}
-body{
-  background:var(--bg); color:var(--ink); font-family:var(--f-body);
-  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
-  min-height:100vh; display:flex; flex-direction:column;
-}
-.wrap{width:100%; max-width:1080px; margin:0 auto; padding:0 24px}
-header.topbar{
-  border-bottom:1px solid var(--line); background:var(--surface);
-}
-header.topbar .wrap{display:flex; align-items:center; gap:14px; padding-top:18px; padding-bottom:18px}
-.logo{
-  height:38px; width:auto; border-radius:6px; background:#fff; padding:4px 8px;
-  object-fit:contain;
-}
-.eyebrow{
-  font-family:var(--f-display); font-size:11px; font-weight:700; letter-spacing:.14em;
-  text-transform:uppercase; color:var(--accent-ink);
-}
-main{flex:1; padding:56px 0 64px}
-h1{
-  font-family:var(--f-display); font-weight:800; letter-spacing:-.02em;
-  font-size:clamp(28px,4.2vw,44px); line-height:1.1; margin:10px 0 12px;
-}
-.lede{color:var(--ink-2); max-width:62ch; margin:0 0 8px; font-size:16px}
-.meta{
-  display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 36px;
-}
-.chip{
-  border:1px solid var(--line); background:var(--surface); color:var(--muted);
-  border-radius:999px; padding:5px 12px; font-size:12.5px; font-weight:500;
-}
-.grid{display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
-a.card{
-  display:flex; flex-direction:column; gap:10px; text-decoration:none; color:inherit;
-  background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
-  padding:22px; box-shadow:var(--shadow);
-  transition:transform .16s ease, border-color .16s ease, box-shadow .16s ease;
-}
-a.card:hover, a.card:focus-visible{
-  transform:translateY(-2px); border-color:var(--accent);
-  box-shadow:0 2px 4px rgba(29,49,46,.07), 0 14px 32px rgba(30,156,156,.16); outline:none;
-}
-a.card:focus-visible{box-shadow:0 0 0 3px var(--accent-soft), var(--shadow)}
-.card-top{display:flex; align-items:center; justify-content:space-between; gap:12px}
-.brand-mark{
-  height:30px; width:auto; max-width:120px; object-fit:contain;
-  border-radius:5px; padding:3px 6px; background:#fff;
-}
-.badge{
-  font-family:var(--f-display); font-size:10.5px; font-weight:700; letter-spacing:.1em;
-  text-transform:uppercase; color:var(--accent-ink); background:var(--accent-soft);
-  border-radius:999px; padding:4px 10px; white-space:nowrap;
-}
-.card h2{
-  font-family:var(--f-display); font-size:19px; font-weight:700; margin:0; letter-spacing:-.01em;
-}
-.card p{margin:0; color:var(--muted); font-size:14px}
-.card .cta{
-  margin-top:6px; display:inline-flex; align-items:center; gap:6px;
-  color:var(--accent-ink); font-weight:600; font-size:14px;
-}
-.card .cta::after{content:"→"; transition:transform .16s ease}
-a.card:hover .cta::after{transform:translateX(3px)}
-.notice{
-  margin-top:34px; font-size:13px; color:var(--muted);
-  border-top:1px solid var(--line); padding-top:18px; max-width:75ch;
-}
-footer{padding:22px 0 34px; color:var(--muted); font-size:12.5px}
-@media (max-width:560px){
-  main{padding:36px 0 44px}
-  .wrap{padding:0 18px}
-}
-</style>
-</head>
-<body>
+  window.Chart = function(el, cfg){ ejeMeses(cfg); return new _C(el, cfg); };
+  window.Chart.defaults = _C.defaults;
+  window.Chart.register = function(){ return _C.register.apply(_C, arguments) };
+  window.Chart.getChart = function(){ return _C.getChart.apply(_C, arguments) };
+})();
+Chart.defaults.font.family="'Google Sans','Roboto',sans-serif";Chart.defaults.font.size=11;Chart.defaults.animation=false;
+var C={cc:'#4285F4',dev:'#C5221F',monto:'#34A853',rt:'#F9AB00'};
+var IND={tu:'#A142F4',so:'#24C1E0',sd:'#F538A0'};
+function mkRes(id,labels,data){var ds=SER_RES.map(function(s){return{label:s.l,data:data.map(function(r){return r[s.f]}),borderColor:s.c,tension:.3,fill:false,pointRadius:2}});new Chart(document.getElementById(id),{type:'line',data:{labels:labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:12,padding:8}}},scales:{y:{ticks:{callback:function(v){return fv(v)}}}}}})}
+function mkInd(id,labels,data){var ds=SER_IND.map(function(s){return{label:s.l,data:data.map(function(r){return r[s.f]*100}),borderColor:s.c,tension:.3,fill:false,pointRadius:2}});new Chart(document.getElementById(id),{type:'line',data:{labels:labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:12,padding:8}}},scales:{y:{ticks:{callback:function(v){return v.toFixed(1)+'%'}}}}}})}
+mkRes('chart-res-hist',DATA.labels_hist,DATA.hist_series);mkInd('chart-ind-hist',DATA.labels_hist,DATA.hist_series);
+mkRes('chart-res-m12',DATA.labels_12m,DATA.m12_series);mkInd('chart-ind-m12',DATA.labels_12m,DATA.m12_series);
+mkRes('chart-res-ej',DATA.labels_ej,DATA.ej_series);mkInd('chart-ind-ej',DATA.labels_ej,DATA.ej_series);
+// Sparklines
+function spark(id,arr,color){var el=document.getElementById(id);if(!el)return;new Chart(el,{type:'line',data:{labels:arr.map(function(_,i){return i}),datasets:[{data:arr,borderColor:color,borderWidth:1.8,tension:.35,pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}},elements:{line:{borderCapStyle:'round'}}}})}
+spark('spark-cc',DATA.spark.cc,'#4285F4');spark('spark-dev',DATA.spark.dev,'#C5221F');spark('spark-va',DATA.spark.va,'#8AB4F8');
 
-<header class="topbar">
-  <div class="wrap">
-    <img class="logo" src="assets/estar-seguros.png" alt="Estar Seguros">
-    <div>
-      <div class="eyebrow">Consultoría · Asistencia Vial</div>
-      <div style="font-weight:600;font-size:14px">Tableros de gestión</div>
-    </div>
-  </div>
-</header>
+(function(){var lab=DATA.sin_mes.map(function(r){return r[0]});
+var barra={label:'N° Reclamos',type:'bar',data:DATA.sin_mes.map(function(r){return r[1]}),backgroundColor:'#4285F4',hoverBackgroundColor:'#1B4FD6',yAxisID:'y',order:3};
+CH('chart-sin-evol',{data:{labels:lab,datasets:[barra]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return fv(ctx.parsed.y)+' reclamos'}}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(128,134,139,.15)'},ticks:{callback:function(v){return fv(v)}}}}}});
+})();
 
-<main>
-  <div class="wrap">
-    <div class="eyebrow">Cierre agosto 2026</div>
-    <h1>Tableros de resultados técnicos</h1>
-    <p class="lede">
-      Cuota devengada pro-rata temporis, expuestos a riesgo como unidad de exposición y
-      vehículos activos por plaza. Cifras expresadas en USD.
-    </p>
-    <div class="meta">
-      <span class="chip">Bordereaux hasta agosto 2026</span>
-      <span class="chip">Seguros Venezuela · Estar Seguros</span>
-      <span class="chip">Fuente: conciliaciones internas</span>
-    </div>
+// Avería x Tipo
+CH('chart-av-tipo',{type:'bar',data:{labels:DATA.av_tipo.averias.map(function(a){return a.averia}),datasets:DATA.av_tipo.tipos.map(function(tp,i){return{label:tp,data:DATA.av_tipo.averias.map(function(a){return a.vals[i]}),backgroundColor:['#4285F4','#C5221F','#34A853','#F9AB00'][i%4]}})},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:12}}},scales:{x:{stacked:true},y:{stacked:true}}}});
+// Avería / Estado / Servicio
+CH('chart-averia',{type:'bar',data:{labels:DATA.sin_averia.map(function(r){return r[0]}),datasets:[{data:DATA.sin_averia.map(function(r){return r[1]}),backgroundColor:'#4285F4'}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
+CH('chart-estado',{type:'bar',data:{labels:DATA.sin_estado.map(function(r){return r[0]}),datasets:[{data:DATA.sin_estado.map(function(r){return r[1]}),backgroundColor:'#34A853'}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
+CH('chart-servicio',{type:'bar',data:{labels:DATA.sin_servicio.map(function(r){return r[0]}),datasets:[{data:DATA.sin_servicio.map(function(r){return r[2]}),backgroundColor:['#4285F4','#C5221F','#F9AB00','#34A853','#A142F4','#24C1E0']}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{callback:function(v){return v+'%'}}}}}});
 
-    <div class="grid">
-      <a class="card" href="tableros/gestion-asistencia-vial.html">
-        <div class="card-top">
-          <img class="brand-mark" src="assets/estar-seguros.png" alt="Estar Seguros">
-          <span class="badge">Consola</span>
-        </div>
-        <h2>Gestión de Asistencia Vial</h2>
-        <p>Tablero operativo por dimensiones: plaza, sucursal, productor y estatus de verificación.</p>
-        <span class="cta">Abrir tablero</span>
-      </a>
+// VA evolución
+CH('chart-va-evo',{type:'line',data:{labels:DATA.labels_hist,datasets:[{label:'Vehículos Activos',data:DATA.va_hist,borderColor:'#4285F4',backgroundColor:'rgba(66,133,244,.18)',tension:.3,fill:true,pointRadius:3,pointHoverRadius:5,borderWidth:2.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return 'Vehículos activos '+fv(ctx.parsed.y)}}}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return fv(v)}}}}}});
+// Persistencia
+(function(){var n=DATA.pers_labels.length;function dash(ctx){return ctx.p1DataIndex>=n-2?[5,4]:undefined}
+CH('chart-pers-ret',{type:'line',data:{labels:DATA.pers_labels,datasets:[{label:'Persistencia',data:DATA.pers_ret_pct,borderColor:'#34A853',backgroundColor:'rgba(52,168,83,.15)',tension:.3,fill:true,pointRadius:2,borderWidth:2.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){var i=ctx.dataIndex;return 'Persistencia: '+fv(ctx.parsed.y,1)+'% ('+DATA.pers_ret[i]+' de '+DATA.pers_base[i]+')'}}}},scales:{y:{suggestedMin:80,suggestedMax:100,ticks:{callback:function(v){return v.toFixed(0)+'%'}}}}}});
+(function(){var n=DATA.pers_labels.length;function shade(base,faint){return DATA.pers_labels.map(function(_,i){return i>=n-2?faint:base})}
+CH('chart-pers-mov',{type:'bar',data:{labels:DATA.pers_labels,datasets:[{label:'Altas',data:DATA.pers_new,backgroundColor:shade('#34A853','rgba(52,168,83,.35)')},{label:'Bajas',data:DATA.pers_lost,backgroundColor:shade('#EA4335','rgba(234,67,53,.35)')}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:12}},tooltip:{callbacks:{label:function(ctx){var prov=ctx.dataIndex>=n-2?' (provisional)':'';return ctx.dataset.label+': '+fv(ctx.parsed.y)+prov}}}},scales:{y:{ticks:{callback:function(v){return fv(v)}}}}}});})();
+})();
+// Cobranza
+CH('chart-cob-dist',{type:'bar',data:{labels:DATA.cob_buckets.map(function(b){return b[0]}),datasets:[{label:'N° recibos',data:DATA.cob_buckets.map(function(b){return b[1]}),backgroundColor:'#4285F4'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){var i=ctx.dataIndex;return fv(DATA.cob_buckets[i][1])+' recibos ('+fv(DATA.cob_buckets[i][2],1)+'%)'}}}},scales:{y:{title:{display:true,text:'N° recibos'},ticks:{callback:function(v){return fv(v)}}}}}});
+CH('chart-cob-evo',{type:'line',data:{labels:DATA.labels_hist,datasets:[{label:'Mediana de días',data:DATA.cob_med_month,borderColor:'#A142F4',backgroundColor:'rgba(161,66,244,.15)',tension:.3,fill:true,pointRadius:2,borderWidth:2.5,spanGaps:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return 'Mediana de '+fv(ctx.parsed.y)+' días'}}}},scales:{y:{beginAtZero:true,title:{display:true,text:'días'},ticks:{callback:function(v){return fv(v)}}}}}});
 
-      <a class="card" href="tableros/estar-seguros-resultados.html">
-        <div class="card-top">
-          <img class="brand-mark" src="assets/estar-seguros.png" alt="Estar Seguros">
-          <span class="badge">Resultados</span>
-        </div>
-        <h2>Estar Seguros</h2>
-        <p>Resultados técnicos de la cartera, evolución de primas y comportamiento de siniestros.</p>
-        <span class="cta">Abrir tablero</span>
-      </a>
-
-      <a class="card" href="tableros/seguros-venezuela-resultados.html">
-        <div class="card-top">
-          <img class="brand-mark" src="assets/seguros-venezuela.jpeg" alt="Seguros Venezuela">
-          <span class="badge">Cliente</span>
-        </div>
-        <h2>Seguros Venezuela</h2>
-        <p>Vista cliente con resultados técnicos, primas cobradas y reclamaciones del período.</p>
-        <span class="cta">Abrir tablero</span>
-      </a>
-    </div>
-
-    <p class="notice">
-      Información confidencial de uso interno y del cliente autorizado. Los tableros contienen
-      datos de asegurados sujetos a confidencialidad; no deben compartirse fuera del alcance
-      acordado.
-    </p>
-  </div>
-</main>
-
-<footer>
-  <div class="wrap">Actualizado: agosto 2026 · Documento generado a partir de las conciliaciones del período.</div>
-</footer>
-
-</body>
-</html>
+</script>
+</body></html>
