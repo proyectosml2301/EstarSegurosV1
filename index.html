@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tableros de gestión · Asistencia Vial · Agosto 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F3F7F6; --surface:#FFFFFF; --surface-2:#EBF3F2;
+  --ink:#1D312E; --ink-2:#3A4F4B; --muted:#5A7470; --line:#D6E3E1;
+  --accent:#1E9C9C; --accent-2:#7DB31A; --accent-soft:#DDF2F1; --accent-ink:#127272;
+  --f-display:'Archivo','Helvetica Neue',Arial,sans-serif;
+  --f-body:'Public Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --r:10px;
+  --shadow:0 1px 2px rgba(29,49,46,.06), 0 8px 24px rgba(29,49,46,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0B1615; --surface:#11211F; --surface-2:#172B29;
+    --ink:#E2EFEC; --ink-2:#C0D2CE; --muted:#8CA6A1; --line:#22383A;
+    --accent:#3CBABA; --accent-2:#9ED13A; --accent-soft:#123A3A; --accent-ink:#7FDCDC;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 10px 28px rgba(0,0,0,.28);
+  }
+  .brand-mark{background:#fff}
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--f-body);
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  min-height:100vh; display:flex; flex-direction:column;
+}
+.wrap{width:100%; max-width:1080px; margin:0 auto; padding:0 24px}
+header.topbar{
+  border-bottom:1px solid var(--line); background:var(--surface);
+}
+header.topbar .wrap{display:flex; align-items:center; gap:14px; padding-top:18px; padding-bottom:18px}
+.logo{
+  height:38px; width:auto; border-radius:6px; background:#fff; padding:4px 8px;
+  object-fit:contain;
+}
+.eyebrow{
+  font-family:var(--f-display); font-size:11px; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent-ink);
+}
+main{flex:1; padding:56px 0 64px}
+h1{
+  font-family:var(--f-display); font-weight:800; letter-spacing:-.02em;
+  font-size:clamp(28px,4.2vw,44px); line-height:1.1; margin:10px 0 12px;
+}
+.lede{color:var(--ink-2); max-width:62ch; margin:0 0 8px; font-size:16px}
+.meta{
+  display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 36px;
+}
+.chip{
+  border:1px solid var(--line); background:var(--surface); color:var(--muted);
+  border-radius:999px; padding:5px 12px; font-size:12.5px; font-weight:500;
+}
+.grid{display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+a.card{
+  display:flex; flex-direction:column; gap:10px; text-decoration:none; color:inherit;
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+  padding:22px; box-shadow:var(--shadow);
+  transition:transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+a.card:hover, a.card:focus-visible{
+  transform:translateY(-2px); border-color:var(--accent);
+  box-shadow:0 2px 4px rgba(29,49,46,.07), 0 14px 32px rgba(30,156,156,.16); outline:none;
+}
+a.card:focus-visible{box-shadow:0 0 0 3px var(--accent-soft), var(--shadow)}
+.card-top{display:flex; align-items:center; justify-content:space-between; gap:12px}
+.brand-mark{
+  height:30px; width:auto; max-width:120px; object-fit:contain;
+  border-radius:5px; padding:3px 6px; background:#fff;
+}
+.badge{
+  font-family:var(--f-display); font-size:10.5px; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--accent-ink); background:var(--accent-soft);
+  border-radius:999px; padding:4px 10px; white-space:nowrap;
+}
+.card h2{
+  font-family:var(--f-display); font-size:19px; font-weight:700; margin:0; letter-spacing:-.01em;
+}
+.card p{margin:0; color:var(--muted); font-size:14px}
+.card .cta{
+  margin-top:6px; display:inline-flex; align-items:center; gap:6px;
+  color:var(--accent-ink); font-weight:600; font-size:14px;
+}
+.card .cta::after{content:"→"; transition:transform .16s ease}
+a.card:hover .cta::after{transform:translateX(3px)}
+.notice{
+  margin-top:34px; font-size:13px; color:var(--muted);
+  border-top:1px solid var(--line); padding-top:18px; max-width:75ch;
+}
+footer{padding:22px 0 34px; color:var(--muted); font-size:12.5px}
+@media (max-width:560px){
+  main{padding:36px 0 44px}
+  .wrap{padding:0 18px}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <img class="logo" src="assets/estar-seguros.png" alt="Estar Seguros">
+    <div>
+      <div class="eyebrow">Consultoría · Asistencia Vial</div>
+      <div style="font-weight:600;font-size:14px">Tableros de gestión</div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="eyebrow">Cierre agosto 2026</div>
+    <h1>Tableros de resultados técnicos</h1>
+    <p class="lede">
+      Cuota devengada pro-rata temporis, expuestos a riesgo como unidad de exposición y
+      vehículos activos por plaza. Cifras expresadas en USD.
+    </p>
+    <div class="meta">
+      <span class="chip">Bordereaux hasta agosto 2026</span>
+      <span class="chip">Seguros Venezuela · Estar Seguros</span>
+      <span class="chip">Fuente: conciliaciones internas</span>
+    </div>
+
+    <div class="grid">
+      <a class="card" href="tableros/gestion-asistencia-vial.html">
+        <div class="card-top">
+          <img class="brand-mark" src="assets/estar-seguros.png" alt="Estar Seguros">
+          <span class="badge">Consola</span>
+        </div>
+        <h2>Gestión de Asistencia Vial</h2>
+        <p>Tablero operativo por dimensiones: plaza, sucursal, productor y estatus de verificación.</p>
+        <span class="cta">Abrir tablero</span>
+      </a>
+
+      <a class="card" href="tableros/estar-seguros-resultados.html">
+        <div class="card-top">
+          <img class="brand-mark" src="assets/estar-seguros.png" alt="Estar Seguros">
+          <span class="badge">Resultados</span>
+        </div>
+        <h2>Estar Seguros</h2>
+        <p>Resultados técnicos de la cartera, evolución de primas y comportamiento de siniestros.</p>
+        <span class="cta">Abrir tablero</span>
+      </a>
+
+      <a class="card" href="tableros/seguros-venezuela-resultados.html">
+        <div class="card-top">
+          <img class="brand-mark" src="assets/seguros-venezuela.jpeg" alt="Seguros Venezuela">
+          <span class="badge">Cliente</span>
+        </div>
+        <h2>Seguros Venezuela</h2>
+        <p>Vista cliente con resultados técnicos, primas cobradas y reclamaciones del período.</p>
+        <span class="cta">Abrir tablero</span>
+      </a>
+    </div>
+
+    <p class="notice">
+      Información confidencial de uso interno y del cliente autorizado. Los tableros contienen
+      datos de asegurados sujetos a confidencialidad; no deben compartirse fuera del alcance
+      acordado.
+    </p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">Actualizado: agosto 2026 · Documento generado a partir de las conciliaciones del período.</div>
+</footer>
+
+</body>
+</html>
